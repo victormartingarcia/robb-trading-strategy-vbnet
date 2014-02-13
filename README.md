@@ -15,7 +15,7 @@ Table of Contents
 Overview
 ----
 
-Robb is a trading algorithm written in C# using the [TradingMotion SDK] development tools (there is a [VB.net] port too).
+Robb is a trading algorithm written in VB.Net using the [TradingMotion SDK] development tools (there is a [C# port] too).
 
 ![OHLC example chart](markdown_files/OHLC.png)
 <sub>__Image footnote:__ Example of Robb OHLC financial chart showing some automatic trades</sub>
@@ -53,19 +53,20 @@ RobbStrategy rules:
 
 Here is a simplified C# source code of Robb's _OnNewBar()_ function. The complete code is all contained in [RobbStrategy.cs] along with comments and definition of parameters.
 
-```csharp
-// Sell signal: the price has crossed above the lower Bollinger band
-if (this.Bars.Close[1] >= bollingerBandsIndicator.GetLowerBand()[1] && this.Bars.Close[0] < bollingerBandsIndicator.GetLowerBand()[0] && this.GetOpenPosition() == 0)
-{
-    // Entering short and placing a profit target 3 standard deviations below the current market price
-    this.Sell(OrderType.Market, 1, 0m, "Enter short position");
-    this.ExitShort(OrderType.Limit, this.Bars.Close[0] - standardDeviationIndicator.GetStdDev()[0], "Exit short position (profit target)");
-}
-else if (this.GetOpenPosition() == -1)
-{
-    // In Simple Order Management mode, Stop and Limit orders must be placed at every bar
-    this.ExitShort(OrderType.Limit, this.GetFilledOrders()[0].FillPrice - standardDeviationIndicator.GetStdDev()[0], "Exit short position (profit target)");
-}
+```VB.net
+' Sell signal: the price has crossed above the lower Bollinger band
+If Me.Bars.Close(1) >= bollingerBandsIndicator.GetLowerBand()(1) And Me.Bars.Close(0) < bollingerBandsIndicator.GetLowerBand()(0) And Me.GetOpenPosition() = 0 Then
+
+    ' Entering short and placing a profit target 3 standard deviations below the current market price
+    Me.Sell(OrderType.Market, 1, 0D, "Enter short position")
+    Me.ExitShort(OrderType.Limit, Me.Bars.Close(0) - standardDeviationIndicator.GetStdDev()(0), "Exit short position (profit target)")
+
+ElseIf Me.GetOpenPosition() = -1 Then
+
+    ' In Simple Order Management mode, Stop and Limit orders must be placed at every bar
+    Me.ExitShort(OrderType.Limit, Me.GetFilledOrders()(0).FillPrice - standardDeviationIndicator.GetStdDev()(0), "Exit short position (profit target)")
+
+End If
 ```
 
 Download
@@ -116,7 +117,7 @@ Disclaimer
 
 I am R&D engineer at [TradingMotion LLC], and head of [TradingMotion SDK] platform. Beware, the info here can be a little biased ;)
 
-  [VB.net port]: https://github.com/victormartingarcia/Robb-trading-strategy-vbnet
+  [C# port]: https://github.com/victormartingarcia/Robb-trading-strategy-csharp
   [TradingMotion SDK]: http://sdk.tradingmotion.com
   [RobbStrategy.cs]: RobbStrategy/RobbStrategy.cs
   [iSystems platform]: https://www.isystems.com
