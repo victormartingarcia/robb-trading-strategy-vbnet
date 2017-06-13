@@ -1,11 +1,11 @@
-﻿Imports System
+Imports System
 Imports System.Collections.Generic
-Imports TradingMotion.SDK.Algorithms
-Imports TradingMotion.SDK.Algorithms.InputParameters
-Imports TradingMotion.SDK.Markets.Charts
-Imports TradingMotion.SDK.Markets.Orders
-Imports TradingMotion.SDK.Markets.Indicators.StatisticFunctions
-Imports TradingMotion.SDK.Markets.Indicators.OverlapStudies
+Imports TradingMotion.SDKv2.Algorithms
+Imports TradingMotion.SDKv2.Algorithms.InputParameters
+Imports TradingMotion.SDKv2.Markets.Charts
+Imports TradingMotion.SDKv2.Markets.Orders
+Imports TradingMotion.SDKv2.Markets.Indicators.StatisticFunctions
+Imports TradingMotion.SDKv2.Markets.Indicators.OverlapStudies
 
 Namespace RobbStrategy
 
@@ -77,9 +77,9 @@ Namespace RobbStrategy
             ' The previous N bars period Bollinger Bands indicator will use
             parameters.Add(New InputParameter("Bollinger Bands period", 58))
             ' The distance between the price and the upper Bollinger band
-            parameters.Add(New InputParameter("Upper standard deviations", 3D))
+            parameters.Add(New InputParameter("Upper standard deviations", 3.0))
             ' The distance between the price and the lower Bollinger band
-            parameters.Add(New InputParameter("Lower standard deviations", 3D))
+            parameters.Add(New InputParameter("Lower standard deviations", 3.0))
 
             Return parameters
 
@@ -113,7 +113,7 @@ Namespace RobbStrategy
             If Me.Bars.Close(1) >= bollingerBandsIndicator.GetLowerBand()(1) And Me.Bars.Close(0) < bollingerBandsIndicator.GetLowerBand()(0) And Me.GetOpenPosition() = 0 Then
 
                 ' Entering short and placing a profit target 3 standard deviations below the current market price
-                Me.Sell(OrderType.Market, 1, 0D, "Enter short position")
+                Me.Sell(OrderType.Market, 1, 0.0, "Enter short position")
                 Me.ExitShort(OrderType.Limit, Me.Bars.Close(0) - standardDeviationIndicator.GetStdDev()(0), "Exit short position (profit target)")
 
             ElseIf Me.GetOpenPosition() = -1 Then
